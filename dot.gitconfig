@@ -12,4 +12,12 @@
     rv = remote -v
     purger = remote prune origin
     aliases = config --get-regexp ^alias\\.
+	hist = log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(red)%s %C(bold red){{%an}}%C(reset) %C(blue)%d%C(reset)' --graph --date=short
 
+[user]
+	name = Choy Rim
+	email = xxxxx
+[pull]
+	ff = only
+[core]
+	excludesfile = /Users/choy.rim/.gitignore_global
