@@ -798,6 +798,14 @@ do
         -- lua = true,
         python = true,
       }
+      -- Projects whose code isn't ruff-formatted yet; format these by hand with <leader>f
+      local no_format_on_save_dirs = {
+        '~/bb/cem-dtb-integration',
+      }
+      local path = vim.api.nvim_buf_get_name(bufnr)
+      for _, dir in ipairs(no_format_on_save_dirs) do
+        if vim.fs.relpath(vim.fs.normalize(dir), path) then return nil end
+      end
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
       else
