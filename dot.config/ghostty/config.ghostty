@@ -1,0 +1,19 @@
+#font-family = "CaskaydiaMono NFM Regular"
+font-family = "0xProto Nerd Font Mono"
+font-size = 10
+
+background-opacity = 0.9
+theme = Argonaut
+
+# quick terminal
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+quick-terminal-position = bottom
+quick-terminal-size = 25%
+
+# switch between ghostty windows
+keybind = ctrl+grave_accent=goto_window:next
+keybind = ctrl+shift+grave_accent=goto_window:previous
+
+# ssh terminal auto-fixing
+shell-integration-features = ssh-env,ssh-terminfo
+
