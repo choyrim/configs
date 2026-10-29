@@ -212,8 +212,10 @@ gaps.outer.right =      6
 
     # Cycle through non-empty workspaces on all monitors
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-rightSquareBracket = 'exec-and-forget aerospace list-workspaces --monitor all --empty no | aerospace workspace --wrap-around --stdin next'
-    alt-leftSquareBracket = 'exec-and-forget aerospace list-workspaces --monitor all --empty no | aerospace workspace --wrap-around --stdin prev'
+    alt-rightSquareBracket = 'workspace --wrap-around next'
+    alt-leftSquareBracket = 'workspace --wrap-around prev'
+#    alt-rightSquareBracket = 'exec-and-forget aerospace list-workspaces --monitor all --empty no | aerospace workspace --wrap-around --stdin next'
+#    alt-leftSquareBracket = 'exec-and-forget aerospace list-workspaces --monitor all --empty no | aerospace workspace --wrap-around --stdin prev'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-shift-semicolon = 'mode service'
