@@ -760,8 +760,27 @@ do
     gh 'WhoIsSethDaniel/mason-tool-installer.nvim',
   }
 
+  -- Mason builds Python tools (basedpyright, debugpy) in venvs using the first `python3`
+  -- on PATH. Homebrew's python3 changes or disappears on upgrades, breaking those venvs,
+  -- so put a uv-managed Python first instead (`uv python install 3.14`). The
+  -- minor-version dir follows uv's patch updates, so the venvs keep working.
+  local uv_python = vim.fn.expand '~/.local/share/uv/python/cpython-3.14-macos-aarch64-none/bin'
+  if vim.fn.isdirectory(uv_python) == 1 then vim.env.PATH = uv_python .. ':' .. vim.env.PATH end
+
   -- Automatically install LSPs and related tools to stdpath for Neovim
   require('mason').setup {}
+
+  -- If a Python tool's venv lost its interpreter anyway, reinstall it in the background
+  local registry = require 'mason-registry'
+  registry.refresh(function()
+    for _, pkg in ipairs(registry.get_installed_packages()) do
+      local venv = vim.fs.joinpath(pkg:get_install_path(), 'venv')
+      if vim.fn.isdirectory(venv) == 1 and vim.fn.executable(vim.fs.joinpath(venv, 'bin', 'python')) == 0 then
+        vim.notify(('Mason: %s lost its Python interpreter, reinstalling'):format(pkg.name), vim.log.levels.WARN)
+        pkg:install { force = true }
+      end
+    end
+  end)
 
   -- Ensure the servers and tools above are installed
   --
