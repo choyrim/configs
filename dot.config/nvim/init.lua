@@ -315,6 +315,11 @@ do
         vim.cmd 'TSUpdate'
         return
       end
+
+      if name == 'markdown-preview.nvim' and vim.fn.executable 'npx' == 1 then
+        run_build(name, { 'npx', '--yes', 'yarn', 'install' }, vim.fs.joinpath(ev.data.path, 'app'))
+        return
+      end
     end,
   })
 end
