@@ -56,8 +56,9 @@ automatically-unhide-macos-hidden-apps = false
 # Fallback value (if you omit the key): persistent-workspaces = []
 persistent-workspaces = [
     "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-    "A", "B", "C", "D", "E", "F", "G", "I", "M", "N",
-    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+    "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+    "U", "V", "W", "X", "Y", "Z"]
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -199,7 +200,11 @@ gaps.outer.right =      6
     e = ['workspace E', 'mode main']
     f = ['workspace F', 'mode main']
     g = ['workspace G', 'mode main']
+    h = ['workspace H', 'mode main']
     i = ['workspace I', 'mode main']
+    j = ['workspace J', 'mode main']
+    k = ['workspace K', 'mode main']
+    l = ['workspace L', 'mode main']
     m = ['workspace M', 'mode main']
     n = ['workspace N', 'mode main']
     o = ['workspace O', 'mode main']
@@ -233,7 +238,11 @@ gaps.outer.right =      6
     shift-e = ['move-node-to-workspace E', 'mode main']
     shift-f = ['move-node-to-workspace F', 'mode main']
     shift-g = ['move-node-to-workspace G', 'mode main']
+    shift-h = ['move-node-to-workspace H', 'mode main']
     shift-i = ['move-node-to-workspace I', 'mode main']
+    shift-j = ['move-node-to-workspace J', 'mode main']
+    shift-k = ['move-node-to-workspace K', 'mode main']
+    shift-l = ['move-node-to-workspace L', 'mode main']
     shift-m = ['move-node-to-workspace M', 'mode main']
     shift-n = ['move-node-to-workspace N', 'mode main']
     shift-o = ['move-node-to-workspace O', 'mode main']
