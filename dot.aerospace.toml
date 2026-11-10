@@ -63,9 +63,9 @@ persistent-workspaces = [
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-# The focused-window glow turns orange while the leader mode is active
+# The focused-window glow turns orange in the leader mode and red in the move mode
 on-mode-changed = [
-    '''exec-and-forget if [ "$(aerospace list-modes --current)" = leader ]; then borders active_color="glow(0xffff9e3b)"; else borders active_color="glow(0xff6666ff)"; fi'''
+    '''exec-and-forget case "$(aerospace list-modes --current)" in leader) c=0xffff9e3b ;; move) c=0xffff4d4d ;; *) c=0xff6666ff ;; esac; borders active_color="glow($c)"'''
 ]
 
 focus-follows-mouse.enabled = false
@@ -144,6 +144,7 @@ gaps.outer.right =      6
     # Workspace switching and moving go through the leader key; see [mode.leader.binding]
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-w = 'mode leader'
+    alt-shift-w = 'mode move'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
@@ -176,12 +177,12 @@ gaps.outer.right =      6
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
 
-# 'leader' binding mode: alt-w then <key> switches workspace, alt-w then shift-<key>
-# moves the focused window there. esc cancels.
+# 'leader' binding mode: alt-w then <key> switches workspace. esc cancels.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.leader.binding]
     esc = 'mode main'
 
+    up = ['fullscreen', 'mode main']
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
     1 = ['workspace 1', 'mode main']
     2 = ['workspace 2', 'mode main']
@@ -220,43 +221,86 @@ gaps.outer.right =      6
     y = ['workspace Y', 'mode main']
     z = ['workspace Z', 'mode main']
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    shift-1 = ['move-node-to-workspace 1', 'mode main']
-    shift-2 = ['move-node-to-workspace 2', 'mode main']
-    shift-3 = ['move-node-to-workspace 3', 'mode main']
-    shift-4 = ['move-node-to-workspace 4', 'mode main']
-    shift-5 = ['move-node-to-workspace 5', 'mode main']
-    shift-6 = ['move-node-to-workspace 6', 'mode main']
-    shift-7 = ['move-node-to-workspace 7', 'mode main']
-    shift-8 = ['move-node-to-workspace 8', 'mode main']
-    shift-9 = ['move-node-to-workspace 9', 'mode main']
-    shift-0 = ['move-node-to-workspace 10', 'mode main']
-    shift-a = ['move-node-to-workspace A', 'mode main']
-    shift-b = ['move-node-to-workspace B', 'mode main']
-    shift-c = ['move-node-to-workspace C', 'mode main']
-    shift-d = ['move-node-to-workspace D', 'mode main']
-    shift-e = ['move-node-to-workspace E', 'mode main']
-    shift-f = ['move-node-to-workspace F', 'mode main']
-    shift-g = ['move-node-to-workspace G', 'mode main']
-    shift-h = ['move-node-to-workspace H', 'mode main']
-    shift-i = ['move-node-to-workspace I', 'mode main']
-    shift-j = ['move-node-to-workspace J', 'mode main']
-    shift-k = ['move-node-to-workspace K', 'mode main']
-    shift-l = ['move-node-to-workspace L', 'mode main']
-    shift-m = ['move-node-to-workspace M', 'mode main']
-    shift-n = ['move-node-to-workspace N', 'mode main']
-    shift-o = ['move-node-to-workspace O', 'mode main']
-    shift-p = ['move-node-to-workspace P', 'mode main']
-    shift-q = ['move-node-to-workspace Q', 'mode main']
-    shift-r = ['move-node-to-workspace R', 'mode main']
-    shift-s = ['move-node-to-workspace S', 'mode main']
-    shift-t = ['move-node-to-workspace T', 'mode main']
-    shift-u = ['move-node-to-workspace U', 'mode main']
-    shift-v = ['move-node-to-workspace V', 'mode main']
-    shift-w = ['move-node-to-workspace W', 'mode main']
-    shift-x = ['move-node-to-workspace X', 'mode main']
-    shift-y = ['move-node-to-workspace Y', 'mode main']
-    shift-z = ['move-node-to-workspace Z', 'mode main']
+
+# 'move' binding mode: alt-shift-w then <key> moves the focused window to that workspace,
+# alt-shift-w then alt-shift-<key> moves it and follows it there. esc cancels.
+# See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
+[mode.move.binding]
+    esc = 'mode main'
+
+    1 = ['move-node-to-workspace 1', 'mode main']
+    2 = ['move-node-to-workspace 2', 'mode main']
+    3 = ['move-node-to-workspace 3', 'mode main']
+    4 = ['move-node-to-workspace 4', 'mode main']
+    5 = ['move-node-to-workspace 5', 'mode main']
+    6 = ['move-node-to-workspace 6', 'mode main']
+    7 = ['move-node-to-workspace 7', 'mode main']
+    8 = ['move-node-to-workspace 8', 'mode main']
+    9 = ['move-node-to-workspace 9', 'mode main']
+    0 = ['move-node-to-workspace 10', 'mode main']
+    a = ['move-node-to-workspace A', 'mode main']
+    b = ['move-node-to-workspace B', 'mode main']
+    c = ['move-node-to-workspace C', 'mode main']
+    d = ['move-node-to-workspace D', 'mode main']
+    e = ['move-node-to-workspace E', 'mode main']
+    f = ['move-node-to-workspace F', 'mode main']
+    g = ['move-node-to-workspace G', 'mode main']
+    h = ['move-node-to-workspace H', 'mode main']
+    i = ['move-node-to-workspace I', 'mode main']
+    j = ['move-node-to-workspace J', 'mode main']
+    k = ['move-node-to-workspace K', 'mode main']
+    l = ['move-node-to-workspace L', 'mode main']
+    m = ['move-node-to-workspace M', 'mode main']
+    n = ['move-node-to-workspace N', 'mode main']
+    o = ['move-node-to-workspace O', 'mode main']
+    p = ['move-node-to-workspace P', 'mode main']
+    q = ['move-node-to-workspace Q', 'mode main']
+    r = ['move-node-to-workspace R', 'mode main']
+    s = ['move-node-to-workspace S', 'mode main']
+    t = ['move-node-to-workspace T', 'mode main']
+    u = ['move-node-to-workspace U', 'mode main']
+    v = ['move-node-to-workspace V', 'mode main']
+    w = ['move-node-to-workspace W', 'mode main']
+    x = ['move-node-to-workspace X', 'mode main']
+    y = ['move-node-to-workspace Y', 'mode main']
+    z = ['move-node-to-workspace Z', 'mode main']
+
+    alt-shift-1 = ['move-node-to-workspace --focus-follows-window 1', 'mode main']
+    alt-shift-2 = ['move-node-to-workspace --focus-follows-window 2', 'mode main']
+    alt-shift-3 = ['move-node-to-workspace --focus-follows-window 3', 'mode main']
+    alt-shift-4 = ['move-node-to-workspace --focus-follows-window 4', 'mode main']
+    alt-shift-5 = ['move-node-to-workspace --focus-follows-window 5', 'mode main']
+    alt-shift-6 = ['move-node-to-workspace --focus-follows-window 6', 'mode main']
+    alt-shift-7 = ['move-node-to-workspace --focus-follows-window 7', 'mode main']
+    alt-shift-8 = ['move-node-to-workspace --focus-follows-window 8', 'mode main']
+    alt-shift-9 = ['move-node-to-workspace --focus-follows-window 9', 'mode main']
+    alt-shift-0 = ['move-node-to-workspace --focus-follows-window 10', 'mode main']
+    alt-shift-a = ['move-node-to-workspace --focus-follows-window A', 'mode main']
+    alt-shift-b = ['move-node-to-workspace --focus-follows-window B', 'mode main']
+    alt-shift-c = ['move-node-to-workspace --focus-follows-window C', 'mode main']
+    alt-shift-d = ['move-node-to-workspace --focus-follows-window D', 'mode main']
+    alt-shift-e = ['move-node-to-workspace --focus-follows-window E', 'mode main']
+    alt-shift-f = ['move-node-to-workspace --focus-follows-window F', 'mode main']
+    alt-shift-g = ['move-node-to-workspace --focus-follows-window G', 'mode main']
+    alt-shift-h = ['move-node-to-workspace --focus-follows-window H', 'mode main']
+    alt-shift-i = ['move-node-to-workspace --focus-follows-window I', 'mode main']
+    alt-shift-j = ['move-node-to-workspace --focus-follows-window J', 'mode main']
+    alt-shift-k = ['move-node-to-workspace --focus-follows-window K', 'mode main']
+    alt-shift-l = ['move-node-to-workspace --focus-follows-window L', 'mode main']
+    alt-shift-m = ['move-node-to-workspace --focus-follows-window M', 'mode main']
+    alt-shift-n = ['move-node-to-workspace --focus-follows-window N', 'mode main']
+    alt-shift-o = ['move-node-to-workspace --focus-follows-window O', 'mode main']
+    alt-shift-p = ['move-node-to-workspace --focus-follows-window P', 'mode main']
+    alt-shift-q = ['move-node-to-workspace --focus-follows-window Q', 'mode main']
+    alt-shift-r = ['move-node-to-workspace --focus-follows-window R', 'mode main']
+    alt-shift-s = ['move-node-to-workspace --focus-follows-window S', 'mode main']
+    alt-shift-t = ['move-node-to-workspace --focus-follows-window T', 'mode main']
+    alt-shift-u = ['move-node-to-workspace --focus-follows-window U', 'mode main']
+    alt-shift-v = ['move-node-to-workspace --focus-follows-window V', 'mode main']
+    alt-shift-w = ['move-node-to-workspace --focus-follows-window W', 'mode main']
+    alt-shift-x = ['move-node-to-workspace --focus-follows-window X', 'mode main']
+    alt-shift-y = ['move-node-to-workspace --focus-follows-window Y', 'mode main']
+    alt-shift-z = ['move-node-to-workspace --focus-follows-window Z', 'mode main']
 
 # Ghostty native tabs show up as separate windows; see https://ghostty.org/docs/help/macos-tiling-wms
 [[on-window-detected]]
