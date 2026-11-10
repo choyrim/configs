@@ -5,7 +5,6 @@
 # "Meeting join" windows go to M and get focus; anything else tiles in place.
 # Check quickly at first in case the rename is instant, then back off; ~5s max.
 aero=/opt/homebrew/bin/aerospace
-log=/tmp/aerospace-teams-meeting.log
 id=$AEROSPACE_WINDOW_ID
 [ -n "$id" ] || exit 0
 
@@ -25,7 +24,6 @@ for delay in 0.1 0.2 0.4 0.8 0.8 0.8 0.8 0.8; do
         sleep 0.4
         [ "$($aero list-workspaces --focused)" = M ] && break
       done
-      echo "$(date '+%T') moved $id, focused=$($aero list-workspaces --focused)" >> "$log"
       exit 0 ;;
     'Microsoft Teams') ;; # not renamed yet
     *) break ;;
