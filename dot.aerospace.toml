@@ -307,8 +307,9 @@ gaps.outer.right =      6
 if.app-id = "com.mitchellh.ghostty"
 run = ["layout tiling"]
 
-# Teams meeting windows: title is set after detection, so a script waits for
-# "Meeting join | <meeting>" and moves just those to M, then focuses M
+# Teams meeting windows: title is set after detection, so float each new Teams
+# window (no retiling while we wait) and let a script wait for the title. It moves
+# "Meeting join | <meeting>" windows to M and focuses them; others tile in place.
 [[on-window-detected]]
 if.app-id = "com.microsoft.teams2"
-run = ['exec-and-forget ~/.config/aerospace/teams-meeting-to-m.sh']
+run = ['layout floating', 'exec-and-forget ~/.config/aerospace/teams-new-window.sh']
